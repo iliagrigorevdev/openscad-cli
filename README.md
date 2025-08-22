@@ -6,12 +6,35 @@ This tool allows you to export OpenSCAD files to various formats, such as STL (f
 
 - [Node.js](https://nodejs.org/) installed on your system.
 
+## Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/user/openscad-cli.git
+    cd openscad-cli
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Install the CLI globally (optional but recommended for ease of use):**
+
+    ```bash
+    npm install -g .
+    ```
+
+    This will make the `openscad-cli` command available in your system's path.
+
 ## Usage
 
-The primary script to use is `export.sh`, which simplifies the execution of the underlying Node.js script.
+The primary script to use is `openscad-cli`, which simplifies the execution of the underlying Node.js script.
 
 ```bash
-./export.sh <input-file.scad | openscad-text> <output-file | output-format>
+openscad-cli <input-file.scad | openscad-text> <output-file | output-format>
 ```
 
 - `<input-file.scad | openscad-text>`: You can either provide the path to an OpenSCAD file (`.scad`) or pass the OpenSCAD code directly as a string.
@@ -30,7 +53,7 @@ Let's create a simple 3D cube and export it to an STL file.
 2.  **Run the export script:**
 
     ```bash
-    ./export.sh cube.scad cube.stl
+    openscad-cli cube.scad cube.stl
     ```
 
     This will generate a `cube.stl` file in the same directory.
@@ -38,13 +61,13 @@ Let's create a simple 3D cube and export it to an STL file.
 3.  **Alternatively, you can pass the OpenSCAD code directly:**
 
     ```bash
-    ./export.sh "cube(10);" cube.stl
+    openscad-cli "cube(10);" cube.stl
     ```
 
 4.  **To get the STL content on the command line, just specify the format:**
 
     ```bash
-    ./export.sh "cube(10);" stl
+    openscad-cli "cube(10);" stl
     ```
 
 ### 2D Example (SVG Output)
@@ -60,7 +83,7 @@ Now, let's create a 2D circle and export it to an SVG file.
 2.  **Run the export script:**
 
     ```bash
-    ./export.sh circle.scad circle.svg
+    openscad-cli circle.scad circle.svg
     ```
 
     This will generate a `circle.svg` file.
@@ -68,18 +91,18 @@ Now, let's create a 2D circle and export it to an SVG file.
 3.  **Alternatively, you can pass the OpenSCAD code directly:**
 
     ```bash
-    ./export.sh "circle(10);" circle.svg
+    openscad-cli "circle(10);" circle.svg
     ```
 
 4.  **To get the SVG content on the command line, just specify the format:**
 
     ```bash
-    ./export.sh "circle(10);" svg
+    openscad-cli "circle(10);" svg
     ```
 
 ## How It Works
 
-This tool uses a WebAssembly version of OpenSCAD (`openscad.wasm`) and a JavaScript wrapper (`openscad.wasm.js`) to execute OpenSCAD code without needing a native installation of the OpenSCAD software. The `export.js` script handles the file I/O and passes the arguments to the WebAssembly module, while `export.sh` provides a convenient command-line interface.
+This tool uses a WebAssembly version of OpenSCAD (`openscad.wasm`) and a JavaScript wrapper (`openscad.wasm.js`) to execute OpenSCAD code without needing a native installation of the OpenSCAD software. The `openscad-cli.js` script handles the file I/O and passes the arguments to the WebAssembly module.
 
 ## Building and Updating OpenSCAD WASM
 

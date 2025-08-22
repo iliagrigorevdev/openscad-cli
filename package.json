@@ -1,0 +1,25 @@
+{
+  "name": "openscad-cli",
+  "version": "1.0.0",
+  "description": "This tool allows you to export OpenSCAD files to various formats, such as STL (for 3D models) and SVG (for 2D drawings), using a WebAssembly-based version of OpenSCAD. This makes it a portable solution that can run in any environment with Node.js.",
+  "main": "openscad-cli.js",
+  "type": "module",
+  "scripts": {
+    "start": "node openscad-cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "openscad-cli": "./openscad-cli.js"
+  },
+  "keywords": [
+    "openscad",
+    "cli",
+    "3d",
+    "2d",
+    "export",
+    "stl",
+    "svg"
+  ],
+  "author": "",
+  "license": "GPLv2"
+}
