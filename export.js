@@ -6,21 +6,32 @@ import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 if (process.argv.length < 4) {
-  console.log("Usage: node export.js <input-file.scad | openscad-text> <output-file.stl>");
+  console.log("Usage: node export.js <input-file.scad | openscad-text> <output-file.stl | stl>");
   process.exit(1);
 }
 
 const scadInput = process.argv[2];
-const stlFileName = process.argv[3];
+const outputFileName = process.argv[3];
 
-const stlFilePath = path.join(__dirname, stlFileName);
+let outputFormat;
+let outputFilePath;
+let writeToFile = true;
+
+if (path.extname(outputFileName) === '') {
+  outputFormat = outputFileName;
+  outputFilePath = `out.${outputFormat}`;
+  writeToFile = false;
+} else {
+  outputFormat = path.extname(outputFileName).slice(1);
+  outputFilePath = outputFileName;
+}
 
 let scadFileContent;
 let scadFileName;
 
 if (scadInput.endsWith('.scad')) {
   scadFileName = scadInput;
-  const scadFilePath = path.join(__dirname, scadFileName);
+  const scadFilePath = scadFileName;
   scadFileContent = fs.readFileSync(scadFilePath, 'utf8');
 } else {
   scadFileName = 'in.scad';
@@ -36,13 +47,22 @@ const instance = await OpenSCAD({
 
 instance.FS.writeFile(scadFileName, scadFileContent);
 
-const mainArgs = [scadFileName, '-o', stlFileName];
+const mainArgs = [scadFileName, '-o', outputFilePath];
 const result = instance.callMain(mainArgs);
 
 if (result === 0) {
-  const stlContent = instance.FS.readFile(stlFileName, { encoding: 'binary' });
-  fs.writeFileSync(stlFilePath, stlContent);
-  console.log('Export successful!');
+  if (writeToFile) {
+    if (instance.FS.findObject(outputFilePath)) {
+        const outputContent = instance.FS.readFile(outputFilePath);
+        fs.writeFileSync(outputFilePath, outputContent);
+        console.log('Export successful!');
+    } else {
+        console.error('Export failed: Output file not found.');
+    }
+  } else {
+    const outputContent = instance.FS.readFile(outputFilePath, { encoding: 'utf8' });
+    console.log(outputContent);
+  }
 } else {
   console.error('Export failed.');
 }
