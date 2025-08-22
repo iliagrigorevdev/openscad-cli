@@ -41,10 +41,17 @@ if (scadInput.endsWith('.scad')) {
 
 const wasmBinary = fs.readFileSync(path.join(__dirname, 'openscad.wasm'));
 
-const instance = await OpenSCAD({
+const openSCADOptions = {
   wasmBinary,
   noInitialRun: true,
-});
+};
+
+if (!writeToFile) {
+  openSCADOptions.print = () => {};
+  openSCADOptions.printErr = () => {};
+}
+
+const instance = await OpenSCAD(openSCADOptions);
 
 instance.FS.writeFile(scadFileName, scadFileContent);
 
