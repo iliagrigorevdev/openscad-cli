@@ -6,7 +6,7 @@ import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 if (process.argv.length < 4) {
-  console.log("Usage: node main.js <input-file.scad | openscad-text> <output-file.stl>");
+  console.log("Usage: node export.js <input-file.scad | openscad-text> <output-file.stl>");
   process.exit(1);
 }
 
