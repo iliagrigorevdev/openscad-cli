@@ -109,3 +109,10 @@ To build the latest version of the OpenSCAD WebAssembly files and update the one
     ```
 
 By following these steps, you can ensure that you are using the latest version of the OpenSCAD WASM module with this tool.
+
+## Acknowledgments
+
+This project is based on the great work of the OpenSCAD and openscad-wasm teams.
+
+- [OpenSCAD](https://github.com/openscad/openscad)
+- [openscad-wasm](https://github.com/openscad/openscad-wasm)
