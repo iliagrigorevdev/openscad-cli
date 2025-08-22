@@ -6,17 +6,26 @@ import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 if (process.argv.length < 4) {
-  console.log("Usage: node main.js <input-file.scad> <output-file.stl>");
+  console.log("Usage: node main.js <input-file.scad | openscad-text> <output-file.stl>");
   process.exit(1);
 }
 
-const scadFileName = process.argv[2];
+const scadInput = process.argv[2];
 const stlFileName = process.argv[3];
 
-const scadFilePath = path.join(__dirname, scadFileName);
 const stlFilePath = path.join(__dirname, stlFileName);
 
-const scadFileContent = fs.readFileSync(scadFilePath, 'utf8');
+let scadFileContent;
+let scadFileName;
+
+if (scadInput.endsWith('.scad')) {
+  scadFileName = scadInput;
+  const scadFilePath = path.join(__dirname, scadFileName);
+  scadFileContent = fs.readFileSync(scadFilePath, 'utf8');
+} else {
+  scadFileName = 'in.scad';
+  scadFileContent = scadInput;
+}
 
 const wasmBinary = fs.readFileSync(path.join(__dirname, 'openscad.wasm'));
 
